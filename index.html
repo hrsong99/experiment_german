@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <style>
+    input {
+      border: none;
+      outline: none;
+      width: 1000px;
+      height: 50px;
+      margin: 0 auto;
+      margin-top: 250px;
+      font-size: 30px;
+      font-family: Georgia;
+    }
+    form {
+      text-align: center;
+    }
+    #trivia {
+      text-align: center;
+      font-size: 25px;
+      font-family: Georgia;
+      width: 800px;
+      height: 50px;
+      position: absolute;
+      left: 50%;
+      margin-left: -400px;
+      top: 25%;
+
+    }
+    #box {
+      width:800px;
+      height:150px;
+      font-family:helvetica;
+      font-size: 15px;
+      overflow:auto;
+      position: absolute;
+      left: 50%;
+      margin-left: -400px;
+      top: 70%;
+    }
+    #done {
+      border: none;
+      background-color: white;
+      color: grey;
+      padding: 25px 35px;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+      position: absolute;
+      left: 90%;
+      top: 85%;
+    }
+    #start {
+      border: none;
+      background-color: white;
+      color: grey;
+      padding: 25px 35px;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+      position: absolute;
+      right: 90%;
+      top: 85%;
+    }
+    #saved {
+      text-align: center;
+      width:600px;
+      height:25px;
+      font-family:helvetica;
+      font-size: 20px;
+      color: grey;
+      overflow:auto;
+      position: absolute;
+      left: 50%;
+      margin-left: -300px;
+      top: 55%;
+    }
+  </style>
+
+
+  <script type="text/javascript">
+
+   var lst = [];
+   var trivia_qs = ["Der Name des Pralines M&Ms steht für Mars und Murrie",
+                    "Man kann den Herzschlag eines Blauwals aus mehr als 3 km Entfernung hören",
+                    "Eine Flasche Wein enthält etwa 700 Weintrauben",
+                    "Fredric Baur hat die Pringles-Dose erfunden. Als er 2008 starb, wurde seine Asche in einer solchen Dosen gefüllt und begraben",
+                    "Im Jahr 1986 startete Apple eine Modelinie",
+                    "Ein Baby kann Eltern im ersten Jahr 750 Stunden Schlaf kosten",
+                    "Google hieß ursprünglich Backrub",
+                    "Als die Computermaus erfunden wurde, hieß sie 'X-Y On-Screen Location Tracker'",
+                    "Die Summe aller Zahlen auf einem Rouletterad ist 666"];
+   var options = ["Keine Quellenangabe", "Quelle: Internet", "Quelle: "];
+   var folders = ["Wikipedia [www.wikipedia.org/trivia]", "Yahoo [www.yahoo.com/info]", "Youtube [www.youtube.com/randomfacts]"];
+   var a = [0,0,0,1,1,1,2,2,2];
+   var count = 0;
+
+   function shuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+      }
+
+   function myFunction() {
+     var x = document.getElementById("input");
+     var y = document.getElementById("saved");
+     var z = document.getElementById("trivia");
+
+     if (x.value == '') {
+       z.innerHTML = trivia_qs[count];
+       y.innerHTML = '';
+     }
+
+     else {
+       var r = Math.floor(Math.random() * 3);
+       lst.push(x.value);
+       x.value = '';
+
+
+       if (a[count] == 2) {
+         lst.push(options[a[count]]+folders[r]);
+         y.innerHTML = options[a[count]]+folders[r];
+
+       }  else {
+         lst.push(options[a[count]]);
+         y.innerHTML = options[a[count]];
+       }
+       count ++;
+     }
+   }
+
+   function done() {
+     var x = document.getElementById("box");
+     x.innerHTML = lst.join('<br/>');
+   }
+
+   function start() {
+     count = 0;
+     lst = [];
+     shuffle(a);
+     var x = document.getElementById("box");
+     var y = document.getElementById("saved");
+     var z = document.getElementById("trivia");
+     y.innerHTML = '';
+     x.innerHTML = '';
+     z.innerHTML = trivia_qs[0];
+   }
+
+  </script>
+
+
+
+  <form id="enter" onSubmit="myFunction(); return false;">
+    <div class="input-group">
+      <input id="input" type=text class="form-control" placeholder="Hier schreiben...">
+    </div>
+  </form>
+
+  <div id="trivia"> </div>
+  <div id="saved"> </div>
+  <div id="box"> </div>
+  <button id="done" type="button" onclick="done();">Done</button>
+  <button id="start" type="button" onclick="start();">Start</button>
+
+
+
+</body>
+</html>​
